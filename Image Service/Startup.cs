@@ -19,6 +19,7 @@ namespace Image_Service
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+            new Data.Database().Database.EnsureCreated();
         }
 
         public IConfiguration Configuration { get; }
@@ -28,10 +29,6 @@ namespace Image_Service
         {
 
             services.AddControllers();
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Image_Service", Version = "v1" });
-            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -40,8 +37,6 @@ namespace Image_Service
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Image_Service v1"));
             }
 
             app.UseHttpsRedirection();
