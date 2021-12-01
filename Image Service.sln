@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31205.134
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Image Service", "Image Service\Image Service.csproj", "{C07085A8-7E9B-4EA6-AC40-B5A4319EEE19}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C07085A8-7E9B-4EA6-AC40-B5A4319EEE19}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C07085A8-7E9B-4EA6-AC40-B5A4319EEE19}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C07085A8-7E9B-4EA6-AC40-B5A4319EEE19}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C07085A8-7E9B-4EA6-AC40-B5A4319EEE19}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {589410C8-E886-42AB-BFC6-96B14568D34B}
+	EndGlobalSection
+EndGlobal
