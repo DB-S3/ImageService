@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Common;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,16 +7,16 @@ using System.Threading.Tasks;
 
 namespace Data
 {
-    public class FileDA
+    public class FileDA : IFileDA
     {
-        public void AddImage(string id, string path, string ownerId) {
+        public async Task AddImage(string id, string path, string ownerId) {
             using (var db = new Database()) {
                 db.Files.Add(new Common.File() { Id = id, Owner = ownerId, Path = path });
                 db.SaveChanges();
             }
         }
 
-        public bool CheckIfFileExists(string id)
+        public async Task<bool> CheckIfFileExists(string id)
         {
             using (var db = new Database())
             {
@@ -35,7 +36,7 @@ namespace Data
             }
         }
 
-        public Common.File GetFile(string id)
+        public async Task<Common.File> GetFile(string id)
         {
             using (var db = new Database())
             {

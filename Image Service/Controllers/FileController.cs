@@ -17,12 +17,10 @@ namespace Image_Service.Controllers
     public class FileController : ControllerBase
     {
         [HttpPost("upload/{ownerid}")]
-        public async Task Get(string ownerid)
+        public async Task<string> upload(string ownerid)
         {
             var postedFile = Request.Form.Files[0];
-            new Logic.File().Upload(ownerid, postedFile);
-            Console.WriteLine(postedFile.FileName);
-
+            return await new Logic.File().Upload(ownerid, postedFile);
         }
 
         [HttpGet("delete/{ownerId}/{id}")]
@@ -30,6 +28,12 @@ namespace Image_Service.Controllers
         {
             new Logic.File().Delete(ownerId,id);
             return "test";
+        }
+
+        [HttpGet("GetImage/{id}")]
+        public async Task<MemoryStream> GetImage(string id)
+        {
+            return await new Logic.File().GetImage(id);
         }
     }
 }

@@ -1,31 +1,62 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Common;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.IO;
+using System.Threading.Tasks;
 
 namespace Logic
 {
     public class File
     {
-        public void Upload(string ownerId, IFormFile file) {
+        private readonly IFileDA FileDA;
+
+        public async Task<string> Upload(string ownerId, IFormFile file) {
             var newPath = "Images/" + ownerId;
             if (!System.IO.File.Exists(newPath)) {
                 System.IO.Directory.CreateDirectory(newPath);
             }
-            using (FileStream stream = new FileStream(Path.Combine(newPath, file.FileName), FileMode.Create))
+            Console.WriteLine(file.ContentType);
+            string id = Guid.NewGuid().ToString();
+            var newFileName = id + await GetExtension(file);
+            using (FileStream stream = new FileStream(Path.Combine(newPath, newFileName), FileMode.Create))
             {
                 file.CopyTo(stream);
             }
-            new Data.FileDA().AddImage(Guid.NewGuid().ToString(),file.FileName, ownerId);
-            
+  
+            await FileDA.AddImage(id, newFileName, ownerId);
+            return id;
         }
 
+        public async Task<string> GetExtension(IFormFile file) {
+            string extension = "";
+            for (int i = file.FileName.Length; i > 0; i--)
+            {
+                extension = extension + file.FileName[i - 1];
+                if (file.FileName[i - 1] == ".".ToCharArray()[0]) {
+                    break;
+                }
+            }
+            char[] charArray = extension.ToCharArray();
+            Array.Reverse(charArray);
+            return new string(charArray);
+        }
 
-        public void Delete(string OwnerId, string id)
+        public async Task Delete(string OwnerId, string id)
         {
-            var file = new Data.FileDA().GetFile(id);
+            var file = await FileDA.GetFile(id);
             System.IO.File.Delete("images/" + OwnerId + "/" + file.Path);
-            new Data.FileDA().DeleteFile(file);
-            Console.WriteLine("images/" + OwnerId + "/" + file.Path);
+            FileDA.DeleteFile(file);
+        }
+
+        public async Task<MemoryStream> GetImage(string id) {
+            Common.File file = await FileDA.GetFile(id);
+            var dataBytes = System.IO.File.ReadAllBytes("Images/" + file.Owner + "/" + file.Path);
+            var dataStream = new MemoryStream(dataBytes);
+            return dataStream;
+        }
+
+        public File() {
+            FileDA = Factory.Factory.GetFileDA();
         }
     }
 }
