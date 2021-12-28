@@ -19,7 +19,7 @@ namespace Image_Service
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
-            new Data.Database().Database.EnsureCreated();
+            //new Data.Database().Database.EnsureCreated();
         }
 
         public IConfiguration Configuration { get; }
