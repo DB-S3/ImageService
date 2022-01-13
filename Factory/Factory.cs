@@ -6,8 +6,8 @@ namespace Factory
 {
     public class Factory
     {
-        public static IFileDA GetFileDA() {
-            return new FileDA();
+        public static IFileDA GetFileDA(Data.Database db) {
+            return new FileDA(db);
         }
     }
 }

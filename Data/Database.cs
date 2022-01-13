@@ -9,12 +9,16 @@ namespace Data
     {
         public DbSet<File> Files { get; set; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseMySql("server=localhost;user id=root;password=root;database=ortisyimages",
-                    new MariaDbServerVersion(new Version(10, 5, 8))
-                );
-        }
+        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        //{
+        //    optionsBuilder.UseMySql("server=localhost;user id=root;password=root;database=ortisyimages",
+        //            new MariaDbServerVersion(new Version(10, 5, 8))
+        //        );
+        //}
+
+        public Database(DbContextOptions<Data.Database> options)
+        : base(options)
+                { }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
