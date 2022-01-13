@@ -55,8 +55,8 @@ namespace Logic
             return dataStream;
         }
 
-        public File() {
-            FileDA = Factory.Factory.GetFileDA();
+        public File(Data.Database db) {
+            FileDA = Factory.Factory.GetFileDA(db);
         }
     }
 }

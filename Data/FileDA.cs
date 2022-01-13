@@ -9,39 +9,32 @@ namespace Data
 {
     public class FileDA : IFileDA
     {
+        private readonly Data.Database db;
+        public FileDA(Data.Database _db) {
+            db = _db;
+        } 
         public async Task AddImage(string id, string path, string ownerId) {
-            using (var db = new Database()) {
-                db.Files.Add(new Common.File() { Id = id, Owner = ownerId, Path = path });
-                db.SaveChanges();
-            }
+            db.Files.Add(new Common.File() { Id = id, Owner = ownerId, Path = path });
+            db.SaveChanges();
         }
 
         public async Task<bool> CheckIfFileExists(string id)
         {
-            using (var db = new Database())
-            {
-                if (db.Files.Where(x => x.Path == id).Count() > 0) {
-                    return true;
-                }
-                return false;
+            if (db.Files.Where(x => x.Path == id).Count() > 0) {
+                return true;
             }
+            return false;
         }
 
         public void DeleteFile(Common.File file)
         {
-            using (var db = new Database())
-            {
-                db.Files.Remove(file);
-                db.SaveChanges();
-            }
+            db.Files.Remove(file);
+            db.SaveChanges();
         }
 
         public async Task<Common.File> GetFile(string id)
         {
-            using (var db = new Database())
-            {
-                return db.Files.Where(x => x.Id == id).FirstOrDefault();
-            }
+            return db.Files.Where(x => x.Id == id).FirstOrDefault();
         }
     }
 }
