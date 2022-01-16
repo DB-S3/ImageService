@@ -1,4 +1,4 @@
-name: .NET
+name: MasterPush
 
 on:
   push:
